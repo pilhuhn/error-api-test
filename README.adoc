@@ -1,0 +1,25 @@
+= Error Api Test
+
+This small sample listens on the Kafka topic 'mytopic' and returns new messages
+via REST-Api to the caller.
+
+.Example run
+[source,shell]
+----
+? curl -i localhost:8080
+HTTP/1.1 204 No Content
+
+? kcat -b 127.0.0.1:9092 -t mytopic -P
+lala            (1)
+? curl -i localhost:8080
+HTTP/1.1 200 OK
+Content-Type: application/json
+content-length: 8
+
+["lala"]%        (2)
+curl -i localhost:8080
+HTTP/1.1 204 No Content
+
+----
+<1> Input message
+<2> Received message array with 1 message
